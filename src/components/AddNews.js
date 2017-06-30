@@ -34,7 +34,13 @@ export default class AddNews extends Component {
             .onTextChange
             .bind(this);
     }
-
+    
+    /**
+     *
+     *
+     * @param {any} e
+     * @memberof AddNews
+     */
     onAuthorChange(e) {
         if (e.target.value.trim().length > 0) {
             this.setState({authorIsEmpty: false})
@@ -42,6 +48,14 @@ export default class AddNews extends Component {
             this.setState({authorIsEmpty: true})
         }
     }
+
+    /**
+     *
+     *
+     * @param {any} e
+     * @memberof AddNews
+     */
+
     onTextChange(e) {
         if (e.target.value.trim().length > 0) {
             this.setState({textIsEmpty: false})
@@ -50,12 +64,22 @@ export default class AddNews extends Component {
         }
     }
 
+    /**
+     * Функция отправки новости
+     *
+     * @memberof AddNews
+     */
     alertAddNews() {
         alert(`Заголовок новости: ${ReactDOM.findDOMNode(this.refs.authorName).value}
 Текст новости: ${ReactDOM.findDOMNode(this.refs.bodyNews).value} 
 `)
     }
 
+    /**
+     * Обрабатываем согласие с условиями
+     *
+     * @memberof AddNews
+     */
     agreeWithRules() {
         console.log()
         this.setState({
@@ -63,6 +87,11 @@ export default class AddNews extends Component {
         })
     }
 
+    /**
+     * Устанавливаем фокус на поля ввода с именем автора
+     *
+     * @memberof AddNews
+     */
     componentDidMount() {
         ReactDOM
             .findDOMNode(this.refs.authorName)
