@@ -16,10 +16,12 @@ export default class Article extends React.Component {
     super(props);
     
     this.state = {
-      visible: false
+      visible: false,
+      counter: 0
     };
    
     this.readmoreClick = this.readmoreClick.bind(this);
+    this.setIncrementCounter = this.setIncrementCounter.bind(this);
   }
 
   /**
@@ -30,16 +32,27 @@ export default class Article extends React.Component {
    */
   readmoreClick(e){
     e.preventDefault();
-    this.setState({visible: true}, console.log('Состояние изменилось'));
+    this.setState({visible: true});
+  }
+
+  /**
+   * Метод подсчета кликов
+   * 
+   * @memberof Article
+   */
+  setIncrementCounter() {
+    
+    this.setState({
+      counter: ++this.state.counter
+    })
   }
 
   render() {
     const {text, author, bigText} = this.props.article;
-    console.log('render',this);
     return (
       <li>
         <p className="news__author">{author}:</p>
-        <p className="news__text">{text}</p>
+        <p onClick={this.setIncrementCounter} className="news__text">{text} И считаем клики по фразе {this.state.counter}</p>
         <a href="" onClick={this.readmoreClick} className={'news__readmore ' + (this.state.visible ? 'none': '')}>Подробнее</a>
         <p className={'news__big-text ' + (this.state.visible ? '' : 'none')}>{bigText}</p>
       </li>

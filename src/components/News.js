@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Article from './Article.js';
+import AddNews from './AddNews.js';
 
 export default class News extends React.Component {
   static propTypes = {
@@ -18,6 +19,7 @@ export default class News extends React.Component {
 
     return (
       <div>
+        <AddNews />
         <ul className="news">
           {newsNodes}
         </ul>
