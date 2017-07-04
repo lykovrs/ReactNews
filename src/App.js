@@ -1,28 +1,27 @@
 import React, {Component} from 'react';
+import EventEmitter from 'event-emitter';
 import logo from './logo.svg';
 import './App.css';
+import {myNews} from './data.js'
 import News from './components/News.js';
 import Comments from './components/Comments.js';
 
-const myNews = [
-  {
-    author: 'Саша Печкин',
-    text: 'В четчерг, четвертого числа...',
-    bigText: 'в четыре с четвертью часа четыре чёрненьких чумазеньких чертёнка чертили чёрными чернилами чертёж.'
-  },
-  {
-    author: 'Просто Вася',
-    text: 'Считаю, что $ должен стоить 35 рублей!',
-    bigText: 'А евро 42!'
-  },
-  {
-    author: 'Гость',
-    text: 'Бесплатно. Скачать. Лучший сайт - http://localhost:3000',
-    bigText: 'На самом деле платно, просто нужно прочитать очень длинное лицензионное соглашение'
-  }
-];
-
 class App extends Component {
+  constructor(props) {
+    super(props);
+    window.ee = new EventEmitter();
+
+    this.state = {
+      news: myNews
+    };
+
+    this.componentDidMount = this
+      .componentDidMount
+      .bind(this);
+    this.componentWillUnmount = this
+      .componentWillUnmount
+      .bind(this);
+  }
   render() {
     return (
       <div className="App">
@@ -30,19 +29,31 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo"/>
           <h2>Новости</h2>
         </div>
-        <p className="App-intro">
-          <button onClick={this.clear}>Очистить новости</button>
-        </p>
-        <News data={myNews}/>
-        <Comments data={myNews}/>
+        <News data={this.state.news}/>
+        <Comments data={this.state.news}/>
       </div>
     );
   }
 
-  clear() {
-    console.log('clear')
-    
-  }
+  componentDidMount() {
+    /* Слушай событие "Создана новость"
+      если событие произошло, обнови this.state.news
+    */
+
+    window
+      .ee
+      .on('News.add', (item) => {
+        alert(item.author)
+        let nextNews = [item].concat(this.state.news);
+        this.setState({news: nextNews});
+      });
+  };
+  componentWillUnmount() {
+    /* Больше не слушай событие "Создана новость" */
+    window
+      .ee
+      .off('News.add');
+  };
 }
 
 export default App;

@@ -34,7 +34,7 @@ export default class AddNews extends Component {
             .onTextChange
             .bind(this);
     }
-    
+
     /**
      *
      *
@@ -70,9 +70,20 @@ export default class AddNews extends Component {
      * @memberof AddNews
      */
     alertAddNews() {
-        alert(`Заголовок новости: ${ReactDOM.findDOMNode(this.refs.authorName).value}
-Текст новости: ${ReactDOM.findDOMNode(this.refs.bodyNews).value} 
-`)
+        let item = {
+            author: ReactDOM
+                .findDOMNode(this.refs.authorName)
+                .value,
+            text: ReactDOM
+                .findDOMNode(this.refs.bodyNews)
+                .value,
+            bigText: ReactDOM
+                .findDOMNode(this.refs.bodyNews)
+                .value
+        }
+        window
+            .ee
+            .emit('News.add', item);
     }
 
     /**
