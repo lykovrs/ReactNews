@@ -43,7 +43,6 @@ class App extends Component {
     window
       .ee
       .on('News.add', (item) => {
-        alert(item.author)
         let nextNews = [item].concat(this.state.news);
         this.setState({news: nextNews});
       });
